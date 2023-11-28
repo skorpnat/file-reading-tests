@@ -3,7 +3,6 @@ package tests;
 import com.codeborne.pdftest.PDF;
 import com.codeborne.xlstest.XLS;
 import com.opencsv.CSVReader;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ public class CheckFilesFromArchive {
                 if (entry.getName().contains(".csv")) {
                     CSVReader csvReader = new CSVReader(new InputStreamReader(zis));
                     List<String[]> csvContent = csvReader.readAll();
-                    Assertions.assertArrayEquals(new String[]{";Marksa;;(955) 656-5656;;Email;;"}, csvContent.get(1));
+                    assertThat(csvContent.get(1)).contains(new String[]{";Marksa;;(955) 656-5656;;Email;;"});
                     return;
                 }
             }
@@ -62,8 +61,8 @@ public class CheckFilesFromArchive {
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains(".xlsx")) {
                     XLS xls = new XLS(zis);
-                    Assertions.assertEquals(xls.excel.getSheetAt(0).getRow(0).getCell(1)
-                            .getStringCellValue(), "Test Company");
+                    assertThat(xls.excel.getSheetAt(0).getRow(0).getCell(1)
+                            .getStringCellValue()).isEqualTo("Test Company");
 
                     return;
                 }
