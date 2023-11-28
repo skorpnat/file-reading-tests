@@ -16,12 +16,13 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class CheckFilesFromArchive {
     private ClassLoader cl = CheckFilesFromArchive.class.getClassLoader();
+    private String archiveFile = "TestFiles.zip";
 
     @DisplayName("Распаковка и проверка CVS из архива ZIP ")
     @Test
     void zipCvsFileTest() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
-                cl.getResourceAsStream("TestFiles.zip"))) {
+                cl.getResourceAsStream(archiveFile))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains(".csv")) {
@@ -39,7 +40,7 @@ public class CheckFilesFromArchive {
     @Test
     void zipPdfFileTest() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
-                cl.getResourceAsStream("TestFiles.zip"))) {
+                cl.getResourceAsStream(archiveFile))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains(".pdf")) {
@@ -52,11 +53,11 @@ public class CheckFilesFromArchive {
         }
     }
 
-    @DisplayName("Распаковка и проверка XLX из архива ZIP ")
+    @DisplayName("Распаковка и проверка XLS из архива ZIP ")
     @Test
     void zipXlxFileTest() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
-                cl.getResourceAsStream("TestFiles.zip"))) {
+                cl.getResourceAsStream(archiveFile))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains(".xlsx")) {
@@ -67,7 +68,7 @@ public class CheckFilesFromArchive {
                     return;
                 }
             }
-            fail("Отсутствует в архиве xlx файл");
+            fail("Отсутствует в архиве xls файл");
         }
     }
 
